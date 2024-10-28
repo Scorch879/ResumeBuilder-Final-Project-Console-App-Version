@@ -52,13 +52,19 @@ namespace ResumeBuilderApp
                         document.Add(new Paragraph("Personal Information"));
                         document.Add(new Paragraph($"Name: {resume.PersonalInfo.Name}"));
                         document.Add(new Paragraph($"Email: {resume.PersonalInfo.Email}"));
-                        document.Add(new Paragraph($"Phone: {resume.PersonalInfo.PhoneNumber}\n"));
+                        document.Add(new Paragraph($"Phone: {resume.PersonalInfo.PhoneNumber}"));
+
+                        document.Add(new Paragraph());
+                        document.Add(new Paragraph());
 
                         // Work Experience
                         document.Add(new Paragraph("Work Experience"));
                         document.Add(new Paragraph($"Company: {resume.WorkExperience.Company}"));
                         document.Add(new Paragraph($"Job Title: {resume.WorkExperience.JobTitle}"));
                         document.Add(new Paragraph($"Duration: {resume.WorkExperience.Duration}\n"));
+
+                        document.Add(new Paragraph());
+                        document.Add(new Paragraph());
 
                         // Education
                         document.Add(new Paragraph("Education"));
@@ -79,7 +85,7 @@ namespace ResumeBuilderApp
             }
             catch (Exception ex)
             {
-                Console.WriteLine("\nError caught: " + ex.Message);
+                Console.WriteLine("\nError caught: " + ex);
             }
         }
     }

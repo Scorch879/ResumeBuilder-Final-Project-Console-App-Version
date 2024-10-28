@@ -26,17 +26,15 @@ namespace ResumeBuilderApp
                     Console.WriteLine("\nError caught: " + ex.Message); continue;
                 }
 
-                // Display the collected information
-                DisplayResume();
-
                 Console.Clear();
 
                 choices:
+                _DisplayResume(); // Display the collected information
                 Console.WriteLine("What would you like to do?");
-                Console.Write("1. Edit a section");
-                Console.Write("2. Export Current Generated Resume");
-                Console.Write("3. Exit");
-
+                Console.WriteLine("1. Edit a section");
+                Console.WriteLine("2. Export Current Generated Resume");
+                Console.WriteLine("3. Exit");
+                Console.Write("Choice: ");
                 string? choice = Console.ReadLine();
 
                 switch (choice)
@@ -44,35 +42,59 @@ namespace ResumeBuilderApp
                     case "1":
                         try
                         {
-                            EditSection();
+                            _EditSection();
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine("\nError caught: " + ex.Message); continue;
                         }
-                        break;
+                        goto choices;
                     case "2":
                         FileHandler.SaveToFile(_resume);
                         break;
                     case "3":
                         Console.WriteLine("\n Exiting Resume Builder.....");
-                        break;
+                        return;
                     default:
                         Console.WriteLine("Invalid option. Please choose again.");
                         goto choices;
-                }
-            }
-        }
 
-        private void EditSection()
+                }
+
+                response:
+                Console.Write("Would you like to build another resume? (y/n): ");
+                choice = Console.ReadLine();
+                if (choice == "y")
+                {
+                    Console.Clear();
+                    Console.WriteLine("Restarting Program.....");
+                    continue;
+                }
+                else if (choice == "n")
+                {
+                    Console.WriteLine("Thanks for using my program!");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Try again!");
+                    goto response;
+                }
+             }
+        }
+       
+
+        private void _EditSection()
         {
             Console.Clear();
 
+            editChoices:
             Console.WriteLine("\nWhich section would you like to edit?");
             Console.WriteLine("1. Personal Information");
             Console.WriteLine("2. Work Experience");
             Console.WriteLine("3. Education");
             Console.WriteLine("4. Skills");
+            Console.Write("Choice: ");
             string? editChoice = Console.ReadLine();
 
             switch (editChoice)
@@ -91,11 +113,11 @@ namespace ResumeBuilderApp
                     break;
                 default:
                     Console.WriteLine("Invalid option. Please choose again.");
-                    break;
+                    goto editChoices;
             }
         }
 
-        private void DisplayResume()
+        private void _DisplayResume()
         {
             Console.WriteLine("\nGenerated Resume:");
 
