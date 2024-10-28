@@ -17,7 +17,7 @@ namespace ResumeBuilderApp
             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             Console.WriteLine("\nExport Format: " + choice);
-            Console.WriteLine("Enter the file name:");
+            Console.Write("Enter the file name: ");
             fileName = Console.ReadLine();
 
             // Combine path and user input for the complete file path

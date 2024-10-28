@@ -26,11 +26,13 @@ namespace ResumeBuilderApp
 
         public override void CollectData()
         {
-            Console.WriteLine("Enter Company:");
+            Console.Write("Enter Company: ");
             Company = Console.ReadLine();
-            Console.WriteLine("Enter Job Title:");
+
+            Console.Write("Enter Job Title: ");
             JobTitle = Console.ReadLine();
-            Console.WriteLine("Enter Duration:");
+
+            Console.Write("Enter Duration: ");
             Duration = Console.ReadLine();
         }
 

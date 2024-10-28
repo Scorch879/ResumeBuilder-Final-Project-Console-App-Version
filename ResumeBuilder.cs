@@ -23,6 +23,7 @@ namespace ResumeBuilderApp
         private void DisplayResume()
         {
             Console.WriteLine("\nGenerated Resume:");
+
             Console.WriteLine(_resume.PersonalInfo);
             Console.WriteLine(_resume.WorkExperience);
             Console.WriteLine(_resume.Education);

@@ -13,11 +13,13 @@ namespace ResumeBuilderApp
 
         public override void CollectData()
         {
-            Console.WriteLine("Enter Degree:");
+            Console.Write("Enter Degree:");
             Degree = Console.ReadLine();
-            Console.WriteLine("Enter School:");
+
+            Console.Write("Enter School:");
             School = Console.ReadLine();
-            Console.WriteLine("Enter Year of Graduation:");
+
+            Console.Write("Enter Year of Graduation:");
             YearOfGraduation = Console.ReadLine();
         }
 

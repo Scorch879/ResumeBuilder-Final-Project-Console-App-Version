@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ResumeBuilderApp
+﻿namespace ResumeBuilderApp
 { 
         public abstract class Section
         {

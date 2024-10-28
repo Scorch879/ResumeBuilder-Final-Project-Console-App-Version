@@ -26,11 +26,13 @@ namespace ResumeBuilderApp
 
         public override void CollectData()
         {
-            Console.Write("Enter Full Name:");
+            Console.Write("Enter Full Name: ");
             Name = Console.ReadLine();
-            Console.Write("Enter Email:");
+
+            Console.Write("Enter Email: ");
             Email = Console.ReadLine();
-            Console.Write("Enter Phone Number:");
+
+            Console.Write("Enter Phone Number: ");
             PhoneNumber = Console.ReadLine();
         }
 
