@@ -6,7 +6,8 @@ namespace ResumeBuilderApp
 { 
     public static class FileHandler
     {
-       public static void SaveToFile(Resume resume, string filepath)
+        // Method to save based on file extension
+        public static void SaveToFile(Resume resume)
         {
             string? choice, filePath, fileName;
 
