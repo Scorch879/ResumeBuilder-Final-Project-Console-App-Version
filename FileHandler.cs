@@ -61,7 +61,7 @@ namespace ResumeBuilderApp
                         document.Add(new Paragraph("Work Experience"));
                         document.Add(new Paragraph($"Company: {resume.WorkExperience.Company}"));
                         document.Add(new Paragraph($"Job Title: {resume.WorkExperience.JobTitle}"));
-                        document.Add(new Paragraph($"Duration: {resume.WorkExperience.Duration}\n"));
+                        document.Add(new Paragraph($"Duration: {resume.WorkExperience.Duration}"));
 
                         document.Add(new Paragraph());
                         document.Add(new Paragraph());
@@ -70,7 +70,7 @@ namespace ResumeBuilderApp
                         document.Add(new Paragraph("Education"));
                         document.Add(new Paragraph($"Degree: {resume.Education.Degree}"));
                         document.Add(new Paragraph($"School: {resume.Education.School}"));
-                        document.Add(new Paragraph($"Year of Graduation: {resume.Education.YearOfGraduation}\n"));
+                        document.Add(new Paragraph($"Year of Graduation: {resume.Education.YearOfGraduation}"));
 
                         // Skills
                         document.Add(new Paragraph("Skills"));
