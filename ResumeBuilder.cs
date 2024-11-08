@@ -4,7 +4,7 @@ namespace ResumeBuilderApp
 {
 	public class ResumeBuilder
 	{
-        private readonly Resume _resume = new Resume();
+        private Resume _resume = new Resume(); //instantiate Resume class privately
 
         public void Start()
         {
