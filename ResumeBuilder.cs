@@ -5,20 +5,33 @@ namespace ResumeBuilderApp
 	public class ResumeBuilder
 	{
         private Resume _resume = new Resume(); //instantiate Resume class privately
-
+        private string title = "\nWelcome to the Resume Builder\n";
         public void Start()
         {
             while (true)
             {
-                Console.WriteLine("\nWelcome to the Resume Builder\n");
-
                 try
                 {
                     // Collect data for each section
+                    Console.WriteLine(title);
+                    Console.WriteLine("PERSONAL INFORMATION");
                     _resume.PersonalInfo.CollectData();
+                    Console.Clear();
+
+                    Console.WriteLine(title);
+                    Console.WriteLine("WORK EXPERIENCE");
                     _resume.WorkExperience.CollectData();
+                    Console.Clear();
+
+                    Console.WriteLine(title);
+                    Console.WriteLine("EDUCATION");
                     _resume.Education.CollectData();
+                    Console.Clear();
+
+                    Console.WriteLine(title);
+                    Console.WriteLine("SKILLS");
                     _resume.Skills.CollectData();
+                    Console.Clear();
                 }
                 catch (Exception ex)
                 {

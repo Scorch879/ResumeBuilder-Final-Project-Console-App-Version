@@ -1,6 +1,13 @@
 ﻿using iText.Layout;
 using iText.Kernel.Pdf;
 using iText.Layout.Element;
+using iText.Kernel.Colors;
+using iText.Layout.Properties;
+using iText.Kernel.Pdf.Canvas.Draw;
+using System.Drawing;
+using iText.Kernel.Pdf.Canvas;
+using iText.Kernel.Geom;
+
 
 namespace ResumeBuilderApp
 { 
@@ -15,14 +22,14 @@ namespace ResumeBuilderApp
             choice = Console.ReadLine();
 
             // Get the Documents path and prompt the user for the file name
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); //code to get the path of the document folder 
 
             Console.WriteLine("\nExport Format: " + choice);
             Console.Write("Enter the file name: ");
             fileName = Console.ReadLine();
 
             // Combine path and user input for the complete file path
-            filePath = Path.Combine(documentsPath, fileName);
+            filePath = System.IO.Path.Combine(documentsPath, fileName); //combining the inputted filename with the file path 
 
             switch (choice)
             {
@@ -48,32 +55,54 @@ namespace ResumeBuilderApp
                     {
                         Document document = new Document(pdf);
 
-                        // Personal Info
-                        document.Add(new Paragraph("Personal Information"));
-                        document.Add(new Paragraph($"Name: {resume.PersonalInfo.Name}"));
-                        document.Add(new Paragraph($"Email: {resume.PersonalInfo.Email}"));
-                        document.Add(new Paragraph($"Phone: {resume.PersonalInfo.PhoneNumber}"));
+                        ///this is from iText library
+                        Style noSpaceStyle = new Style().SetMarginTop(0).SetMarginBottom(0); //noSpace style
+
+
+                        // Placeholder box for image
+                        iText.Kernel.Geom.Rectangle placeholderBox = new iText.Kernel.Geom.Rectangle(37, 700, 100, 100); // x, y, width, height
+                        PdfCanvas canvas = new PdfCanvas(pdf.AddNewPage());
+                        canvas.SetStrokeColor(ColorConstants.BLACK);
+                        canvas.SetLineWidth(1);
+                        canvas.Rectangle(placeholderBox);
+                        canvas.Stroke();
+
+                        document.Add(new Paragraph().SetMarginBottom(100));
+
+                        //PERSONAL INFORMATION
+                        document.Add(new Paragraph($"{resume.PersonalInfo.Name}").SetFontSize(20).SetBold().SetMarginTop(10)
+                            .AddStyle(noSpaceStyle));
+                        document.Add(new Paragraph($"Email: {resume.PersonalInfo.Email}").AddStyle(noSpaceStyle));
+                        document.Add(new Paragraph($"Phone: {resume.PersonalInfo.PhoneNumber}").AddStyle(noSpaceStyle));
 
                         document.Add(new Paragraph());
+                        document.Add(new Paragraph());
+                        AddLine(document);
+                        document.Add(new Paragraph($"{resume.PersonalInfo.Description}"));
+                        document.Add(new Paragraph());
+                        document.Add(new Paragraph());
+
+                        AddLine(document);
                         document.Add(new Paragraph());
 
                         // Work Experience
-                        document.Add(new Paragraph("Work Experience"));
-                        document.Add(new Paragraph($"Company: {resume.WorkExperience.Company}"));
-                        document.Add(new Paragraph($"Job Title: {resume.WorkExperience.JobTitle}"));
-                        document.Add(new Paragraph($"Duration: {resume.WorkExperience.Duration}"));
+                        document.Add(new Paragraph("WORK EXPERIENCE").SetBold());
+                        document.Add(new Paragraph($"Company: {resume.WorkExperience.Company}").AddStyle(noSpaceStyle));
+                        document.Add(new Paragraph($"Job Title: {resume.WorkExperience.JobTitle}").AddStyle(noSpaceStyle));
+                        document.Add(new Paragraph($"Duration: {resume.WorkExperience.Duration}").AddStyle(noSpaceStyle));
 
                         document.Add(new Paragraph());
+                        AddLine(document);
                         document.Add(new Paragraph());
 
                         // Education
-                        document.Add(new Paragraph("Education"));
-                        document.Add(new Paragraph($"Degree: {resume.Education.Degree}"));
-                        document.Add(new Paragraph($"School: {resume.Education.School}"));
-                        document.Add(new Paragraph($"Year of Graduation: {resume.Education.YearOfGraduation}"));
+                        document.Add(new Paragraph("EDUCATION").SetBold());
+                        document.Add(new Paragraph($"Degree: {resume.Education.Degree}").AddStyle(noSpaceStyle));
+                        document.Add(new Paragraph($"School: {resume.Education.School}").AddStyle(noSpaceStyle));
+                        document.Add(new Paragraph($"Year of Graduation: {resume.Education.YearOfGraduation}").AddStyle(noSpaceStyle));
 
                         // Skills
-                        document.Add(new Paragraph("Skills"));
+                        document.Add(new Paragraph("SKILLS").SetBold());
                         foreach (var skill in resume.Skills.SkillList)
                         {
                             document.Add(new Paragraph($"- {skill}"));
@@ -87,6 +116,15 @@ namespace ResumeBuilderApp
             {
                 Console.WriteLine("\nError caught: " + ex);
             }
+        }
+
+        //Method to add the line breaker like a really long line like in MS Word
+        private void AddLine(Document document)
+        {
+            LineSeparator line = new LineSeparator(new SolidLine(1)); //Thickness is set to 1 
+            line.SetWidth(UnitValue.CreatePercentValue(100)); //It needs to be a Percent value so that the line will stretch from margin to margin
+            line.SetFontColor(ColorConstants.GRAY); //Sets the color of the line to Gray or near to black at least
+            document.Add(line);
         }
     }
 

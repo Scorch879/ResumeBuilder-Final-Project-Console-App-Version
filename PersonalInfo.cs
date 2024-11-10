@@ -4,7 +4,7 @@ namespace ResumeBuilderApp
 { 
     public class PersonalInfo : Section
     {
-        private string? _name, _email, _phoneNumber;
+        private string? _name, _address, _email, _phoneNumber, _description;
 
         public string?Name 
         { 
@@ -24,19 +24,37 @@ namespace ResumeBuilderApp
             set => this._phoneNumber = value; 
         }
 
+        public string? Description
+        {
+            get => _description;
+            set => this._description = value;
+        }
+
+        public string? Address
+        {
+            get => _address;
+            set => this._address = value;
+        }
+
         public override void CollectData()
         {
             Console.Write("Enter Full Name: ");
-            Name = Console.ReadLine();
+            Name = GetInput("Name");
+
+            Console.Write("Enter Address: ");
+            Address = GetInput("Address");
 
             Console.Write("Enter Email: ");
-            Email = Console.ReadLine();
+            Email = GetInput("Email");
 
             Console.Write("Enter Phone Number: ");
-            PhoneNumber = Console.ReadLine();
+            PhoneNumber = GetInput("Email");
+
+            Console.Write("Write a Small description about yourself: ");
+            Description = GetInput("Description");
         }
 
         public override string ToString() =>
-            $"Name: {Name}\nEmail: {Email}\nPhone: {PhoneNumber}\n";
+            $"Name: {Name}\nEmail: {Email}\nPhone: {PhoneNumber}\n{Description}\n";
     }
 }

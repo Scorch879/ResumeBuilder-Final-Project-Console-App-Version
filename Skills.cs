@@ -19,7 +19,15 @@ namespace ResumeBuilderApp
             while (true)
             {
                 string? skill = Console.ReadLine();
-                if (skill?.ToLower() == "done") break;
+                if (skill == null || skill == string.Empty)
+                {
+                    Console.Write("Cannot enter empty skill!\n");
+                    continue;
+                }
+
+                if (skill?.ToLower() == "done") 
+                    break;
+
                 SkillList.Add(skill);
             }
         }
