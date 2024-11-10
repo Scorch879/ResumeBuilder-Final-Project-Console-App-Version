@@ -14,24 +14,34 @@ namespace ResumeBuilderApp
                 {
                     // Collect data for each section
                     Console.WriteLine(title);
-                    Console.WriteLine("PERSONAL INFORMATION");
+                    Console.WriteLine("==============================");
+                    Console.WriteLine("     PERSONAL INFORMATION");
+                    Console.WriteLine("==============================\n");
                     _resume.PersonalInfo.CollectData();
                     Console.Clear();
 
                     Console.WriteLine(title);
-                    Console.WriteLine("WORK EXPERIENCE");
+                    Console.WriteLine("==============================");
+                    Console.WriteLine("       WORK EXPERIENCE");
+                    Console.WriteLine("==============================\n");
                     _resume.WorkExperience.CollectData();
                     Console.Clear();
 
                     Console.WriteLine(title);
-                    Console.WriteLine("EDUCATION");
+                    Console.WriteLine("==============================");
+                    Console.WriteLine("          EDUCATION");
+                    Console.WriteLine("==============================\n");
                     _resume.Education.CollectData();
                     Console.Clear();
 
+
                     Console.WriteLine(title);
-                    Console.WriteLine("SKILLS");
+                    Console.WriteLine("==============================");
+                    Console.WriteLine("           SKILLS");
+                    Console.WriteLine("==============================\n");
                     _resume.Skills.CollectData();
                     Console.Clear();
+
                 }
                 catch (Exception ex)
                 {
