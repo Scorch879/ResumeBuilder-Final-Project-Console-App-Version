@@ -7,9 +7,23 @@ namespace ResumeBuilderApp
 	{
         private string? _degree, _school, _yearOfGraduation;
 
-        public string? Degree { get => this._degree; set => this._degree = value; }
-        public string? School { get => this._school; set => this._school = value; }
-        public string? YearOfGraduation { get => this._yearOfGraduation ; set => this._yearOfGraduation = value; }
+        public string? Degree 
+        { 
+            get => this._degree; 
+            set => this._degree = value; 
+        }
+
+        public string? School 
+        { 
+            get => this._school; 
+            set => this._school = value; 
+        }
+
+        public string? YearOfGraduation 
+        { 
+            get => this._yearOfGraduation ; 
+            set => this._yearOfGraduation = value; 
+        }
 
         public override void CollectData()
         {

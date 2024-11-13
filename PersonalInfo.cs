@@ -55,6 +55,6 @@ namespace ResumeBuilderApp
         }
 
         public override string ToString() =>
-            $"Name: {Name}\nEmail: {Email}\nPhone: {PhoneNumber}\n{Description}\n";
+            $"Name: {Name}\nEmail: {Email}\nPhone: {PhoneNumber}\nDescription: {Description}\n";
     }
 }

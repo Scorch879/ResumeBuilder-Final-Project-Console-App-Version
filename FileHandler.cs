@@ -97,7 +97,8 @@ namespace ResumeBuilderApp
 
             if (fileName == null)
             {
-                Console.WriteLine("No file name entered. Try Again Please");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("No file name entered. Try Again Please"); Console.ResetColor();
                 goto start;
             }
 
@@ -112,7 +113,8 @@ namespace ResumeBuilderApp
             //checks if it exists
             if (!File.Exists(filePathTxt))
             {
-                Console.WriteLine($"File not found: {fileName}");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"File not found: {fileName}"); Console.ResetColor();
                 return null;
             }
 
@@ -160,7 +162,8 @@ namespace ResumeBuilderApp
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error loading resume: " + ex.Message);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error loading resume: " + ex.Message); Console.ResetColor();
             }
             
             return resume;
@@ -238,7 +241,8 @@ namespace ResumeBuilderApp
             }
             catch (Exception ex)
             {
-                Console.WriteLine("\nError caught: " + ex);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nError caught: " + ex); Console.ResetColor();
             }
         }
 
@@ -287,7 +291,8 @@ namespace ResumeBuilderApp
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error saving resume: " + ex.Message);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error saving resume: " + ex.Message); Console.ResetColor();
             }
         }
     }

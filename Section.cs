@@ -13,8 +13,11 @@
                     input = Console.ReadLine();
                     if (string.IsNullOrEmpty(input))
                     {
-                        Console.WriteLine($"{fieldName} can't be empty. Please enter again!");
-                        Console.Write($"Enter {fieldName}: ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"{fieldName} can't be empty. Please enter again!"); Console.ResetColor();
+
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write($"Enter {fieldName}: "); Console.ResetColor();
                     }
                 } while (string.IsNullOrEmpty(input));
 
