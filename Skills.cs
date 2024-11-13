@@ -15,6 +15,8 @@ namespace ResumeBuilderApp
 
         public override void CollectData()
         {
+            _skillList.Clear();
+
             Console.WriteLine("Enter skills (type 'done' to finish):");
             while (true)
             {

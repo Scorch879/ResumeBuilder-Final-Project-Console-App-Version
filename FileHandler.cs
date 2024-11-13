@@ -4,44 +4,168 @@ using iText.Layout.Element;
 using iText.Kernel.Colors;
 using iText.Layout.Properties;
 using iText.Kernel.Pdf.Canvas.Draw;
-using System.Drawing;
 using iText.Kernel.Pdf.Canvas;
-using iText.Kernel.Geom;
-
 
 namespace ResumeBuilderApp
-{ 
+{
     public static class FileHandler
     {
         // Method to save based on file extension
         public static void SaveToFile(Resume resume)
         {
-            string? choice, filePath, fileName;
+            string? filePathPdf, filePathTxt, fileName;
 
-            Console.Write("Choose Export Format (1 > Text File  | 2 > PDF): ");
-            choice = Console.ReadLine();
-
-            // Get the Documents path and prompt the user for the file name
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); //code to get the path of the document folder 
-
-            Console.WriteLine("\nExport Format: " + choice);
+            beginning:
+            //Input name of the file
+            Console.WriteLine("\nExporting....");
             Console.Write("Enter the file name: ");
             fileName = Console.ReadLine();
 
-            // Combine path and user input for the complete file path
-            filePath = System.IO.Path.Combine(documentsPath, fileName); //combining the inputted filename with the file path 
+            // Get the Documents path and prompt the user for the file name
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); // Get the path of the document folder
+            string folderPath = Path.Combine(documentsPath, "Resume Text Files Data");
 
-            switch (choice)
+            //Checks if the folder exists or not
+            if (!Directory.Exists(folderPath))
             {
-                case "1":
-                    new Txt().ExportToTxt(resume, filePath + ".txt");
-                    break;
-                case "2":
-                    new PDF().ExportToPdf(resume, filePath + ".pdf");
-                    break;
+                Directory.CreateDirectory(folderPath);
+            }
+                
+            // Combine path and user input for the complete file path
+            filePathPdf = Path.Combine(documentsPath, fileName + ".pdf"); //pdf going to the MyDocuments folder
+            filePathTxt = Path.Combine(folderPath, fileName + ".txt"); //txt file going to the folder "Resume Text Files Data" in MyDocuments
+
+            try
+            {
+                //Check if the file exists or not
+                if (File.Exists(filePathPdf) || File.Exists(filePathTxt))
+                {
+                    Console.Write("This name is already taken. Do you want to overwrite it? (y/n): ");
+                    string? choice = Console.ReadLine();
+                    if (choice?.ToLower() != "y")
+                    {
+                        Console.WriteLine("Save Canceled");
+                        Console.WriteLine("Do you want to export it? (y/n): ");
+                            choice = Console.ReadLine();
+                            if (choice?.ToLower() == "y")
+                                goto beginning;
+                        return;
+                    }
+                }
+
+                new Txt().ExportToTxt(resume, filePathTxt); //Saves the file into a pdf also
+                new PDF().ExportToPdf(resume, filePathPdf); //Saving the file into a pdf
+
+               
+                Console.Write("\nResume Saved Successfully");
+                Thread.Sleep(500);
+                Console.Write(".");
+                Thread.Sleep(500);
+                Console.Write(".");
+                Thread.Sleep(500);
+                Console.Write(".");
+                Thread.Sleep(500);
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
             }
         }
-	}
+
+        private static void LoadingIndicator()
+        {
+
+            while (true)
+            {
+                Console.Write("Saving PDF");
+                for (int i = 0; i < 3; i++)
+                {
+                    Console.Write(".");
+                    Thread.Sleep(500); //delay for dots
+                }
+                Console.Write("\b\b\b   \b\b\b"); //reset dots 
+                Console.WriteLine();
+            }
+        }
+
+        public static Resume LoadFromTxtFile()
+         {
+            start:
+            //User enters the file name
+            Console.Write("Enter the file name to load (without file extension): ");
+            string? fileName = Console.ReadLine()?.Trim();
+
+            if (fileName == null)
+            {
+                Console.WriteLine("No file name entered. Try Again Please");
+                goto start;
+            }
+
+            // Get the Documents path and prompt the user for the file name
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); //get the path of the document folder 
+            string folderPath = Path.Combine(documentsPath, "Resume Text Files Data"); //gets the path of the folder 
+
+            string filePathTxt = Path.Combine(folderPath, fileName + ".txt"); //txt file going to the folder "Resume Text Files Data" in MyDocuments
+
+            Console.WriteLine($"Trying to load resume file: {fileName}");
+
+            //checks if it exists
+            if (!File.Exists(filePathTxt))
+            {
+                Console.WriteLine($"File not found: {fileName}");
+                return null;
+            }
+
+            //Store the information retrieved in a new Resume object
+            Resume resume = new Resume();
+
+            try
+            {
+                using (StreamReader reader = new StreamReader(filePathTxt))
+                {
+                    // Assuming a consistent format, read each line and insert the data to the resume fields
+                    reader.ReadLine(); // Skip the "Personal Information" header
+                    resume.PersonalInfo.Name = reader.ReadLine()?.Split(": ")[1];
+                    resume.PersonalInfo.Email = reader.ReadLine()?.Split(": ")[1];
+                    resume.PersonalInfo.PhoneNumber = reader.ReadLine()?.Split(": ")[1];
+                    resume.PersonalInfo.Description = reader.ReadLine()?.Split(": ")[1];
+
+                    reader.ReadLine(); //skip blank space
+
+                    reader.ReadLine();//Skip work experience header
+                    resume.WorkExperience.Company = reader.ReadLine()?.Split(": ")[1];
+                    resume.WorkExperience.JobTitle = reader.ReadLine()?.Split(": ")[1];
+                    resume.WorkExperience.Duration = reader.ReadLine()?.Split(": ")[1];
+
+                    reader.ReadLine(); //skip blank space
+
+                    reader.ReadLine(); //Skip education header
+                    resume.Education.Degree = reader.ReadLine()?.Split(": ")[1];
+                    resume.Education.School = reader.ReadLine()?.Split(": ")[1];
+                    resume.Education.YearOfGraduation = reader.ReadLine()?.Split(": ")[1];
+
+                    reader.ReadLine(); //Skip empty line
+
+                    reader.ReadLine(); //skips skills header
+
+                    string? skill;
+                    while((skill = reader.ReadLine()) != null)
+                    {
+                        resume.Skills.SkillList.Add(skill.TrimStart('-').Trim());
+                    }
+                }
+
+                Console.WriteLine("\nResume Loaded Successfully\n");
+                Console.Write("Press any key to continue");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error loading resume: " + ex.Message);
+            }
+            
+            return resume;
+        }
+    }
 
     public class PDF
     {
@@ -139,7 +263,8 @@ namespace ResumeBuilderApp
                     writer.WriteLine("Personal Information");
                     writer.WriteLine($"Name: {resume.PersonalInfo.Name}");
                     writer.WriteLine($"Email: {resume.PersonalInfo.Email}");
-                    writer.WriteLine($"Phone: {resume.PersonalInfo.PhoneNumber}\n");
+                    writer.WriteLine($"Phone: {resume.PersonalInfo.PhoneNumber}");
+                    writer.WriteLine($"Description: {resume.PersonalInfo.Description}\n");
 
                     writer.WriteLine("Work Experience");
                     writer.WriteLine($"Company: {resume.WorkExperience.Company}");
@@ -157,7 +282,7 @@ namespace ResumeBuilderApp
                         writer.WriteLine($"- {skill}");
                     }
 
-                    Console.WriteLine("Text resume saved successfully!");
+                    Console.WriteLine("\nText file saved successfully!");
                 }
             }
             catch (Exception ex)
@@ -166,4 +291,5 @@ namespace ResumeBuilderApp
             }
         }
     }
+
 }
