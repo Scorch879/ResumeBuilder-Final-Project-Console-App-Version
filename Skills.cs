@@ -23,7 +23,8 @@ namespace ResumeBuilderApp
                 string? skill = Console.ReadLine();
                 if (skill == null || skill == string.Empty)
                 {
-                    Console.Write("Cannot enter empty skill!\n");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("Cannot enter empty skill!\n"); Console.ForegroundColor = ConsoleColor.Yellow;
                     continue;
                 }
 

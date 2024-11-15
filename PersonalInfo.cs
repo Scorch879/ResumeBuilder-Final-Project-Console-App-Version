@@ -38,18 +38,23 @@ namespace ResumeBuilderApp
 
         public override void CollectData()
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Enter Full Name: ");
             Name = GetInput("Name");
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Enter Address: ");
             Address = GetInput("Address");
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Enter Email: ");
             Email = GetInput("Email");
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Enter Phone Number: ");
             PhoneNumber = GetInput("Email");
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Write a Small description about yourself: ");
             Description = GetInput("Description");
         }
