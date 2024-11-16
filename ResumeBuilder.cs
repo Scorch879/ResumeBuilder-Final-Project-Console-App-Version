@@ -351,6 +351,7 @@ namespace ResumeBuilderApp
                         Console.ResetColor();
                         return;
                     case "3":
+                        Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\nExiting Resume Builder....."); Console.ResetColor();
                         return;

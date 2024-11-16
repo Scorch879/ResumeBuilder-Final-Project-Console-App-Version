@@ -6,7 +6,8 @@
         {
         begin:
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\t\t\tMain Menu");
+            Console.WriteLine("==============================================================================");
+            Console.WriteLine("\t\t\t        Main Menu");
             Console.WriteLine("=============================================================================="); Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("1. Build Resume");
@@ -37,6 +38,7 @@
                     Console.ResetColor();
                     goto begin;
                 case "3":
+                    Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     FileHandler.DeleteUser();
                     Console.ResetColor();

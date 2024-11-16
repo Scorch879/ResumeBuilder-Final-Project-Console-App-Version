@@ -484,7 +484,7 @@ namespace ResumeBuilderApp
             Console.ForegroundColor = ConsoleColor.Yellow;
 
             // Allow admin to approve or reject
-            Console.Write("\n\nEnter the username to approve/reject the password change request: ");
+            Console.Write("\nEnter the username to approve/reject the password change request: ");
             string usernameToApprove = Console.ReadLine();
 
             bool userFound = false;
@@ -497,9 +497,9 @@ namespace ResumeBuilderApp
                 {
                     approval:
                     userFound = true;
-                    Console.WriteLine($"Pending request for {usernameToApprove}.");
+                    Console.WriteLine($"\nPending request for {usernameToApprove}.");
 
-                    Console.Write("Approve this request? (y/n): ");
+                    Console.Write("\nApprove this request? (y/n): ");
                     string approvalResponse = Console.ReadLine();
 
                     if (approvalResponse.ToLower() == "y")
@@ -525,7 +525,7 @@ namespace ResumeBuilderApp
 
                         // Reject password change:flag it has password_rejected
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"Password change request for {usernameToApprove} has been rejected.");
+                        Console.WriteLine($"\nPassword change request for {usernameToApprove} has been rejected.");
                         Console.ResetColor();
                     }
                     else
@@ -559,6 +559,20 @@ namespace ResumeBuilderApp
 
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("\nAccount Control | Deletion of Accounts\n");
+            Console.WriteLine("==============================================================================");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            var lines = File.ReadAllLines(userData);
+            Console.WriteLine("Existing Users:\n");
+            foreach (var line in lines)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                var parts = line.Split(':');
+                if (parts.Length > 0)
+                    Console.WriteLine($"- {parts[0]}"); // Display the username (first element)
+            }
+
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("==============================================================================\n");
             Console.ForegroundColor = ConsoleColor.Yellow;
 
@@ -566,35 +580,38 @@ namespace ResumeBuilderApp
             Console.Write("Please enter the user to be deleted: ");
             username = Console.ReadLine();
 
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("==============================================================================\n");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-
-            var lines = new List<string>(File.ReadAllLines(userData));
+          
+            var userList = new List<string>(File.ReadAllLines(userData));
             bool userFound = false; //presume not found
 
-            for (int i = 0; i < lines.Count; i++)
+            for (int i = 0; i < userList.Count; i++)
             {
-                if (lines[i].StartsWith(username + ":"))
+                if (userList[i].StartsWith(username + ":"))
                 {
-                    lines.RemoveAt(i);
+                    userList.RemoveAt(i);
                     userFound = true;
                     break;
                 }
             }
 
+
             if (userFound) //if it exists
             {
-                File.WriteAllLines(userData, lines);
+                File.WriteAllLines(userData, userList);
                 string userFolder = Path.Combine(usersFolder, username);
 
                 if (Directory.Exists(userFolder))
                 {
                     Directory.Delete(userFolder, true);
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine($"User: {username} has been deleted!"); Console.ResetColor();
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"User: {username} has been deleted!\n"); Console.ResetColor();
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("Press any key to continue");
+                    Console.ReadKey();
+                    return true;
                 }
-                return true;
             }
 
             Console.ForegroundColor = ConsoleColor.Red;
