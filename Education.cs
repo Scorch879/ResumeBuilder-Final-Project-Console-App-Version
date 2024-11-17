@@ -27,6 +27,12 @@ namespace ResumeBuilderApp
 
         public override void CollectData()
         {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("==============================");
+            Console.WriteLine("          EDUCATION");
+            Console.WriteLine("==============================\n");
+
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Enter Degree:");
             Degree = GetInput("Degree");

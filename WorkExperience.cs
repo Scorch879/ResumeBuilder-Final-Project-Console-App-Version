@@ -26,6 +26,12 @@ namespace ResumeBuilderApp
 
         public override void CollectData()
         {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("==============================");
+            Console.WriteLine("       WORK EXPERIENCE");
+            Console.WriteLine("==============================\n");
+
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Enter Company: ");
             Company = GetInput("Company");

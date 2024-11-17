@@ -177,6 +177,88 @@ namespace ResumeBuilderApp
             return null; // login failed
         }
 
+        public static void DeleteFile(string username)
+        {
+            Console.Clear();
+            //Retrieve list of resume files for the user
+        response:
+            List<string> resumeFiles = FileHandler.GetUserResumes(username);
+
+            if (resumeFiles.Count > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"\nResumes for {username}:"); Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+
+                foreach (string resume in resumeFiles)
+                {
+                    Console.WriteLine($"- {resume}");
+                }
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nNo resumes found for the user.\n");
+                return;
+            }
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("\nEnter File to be delete (Filename w/o Extension or type exit to return): ");
+            string? fileName = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(fileName))
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Please enter a valid filename\n");
+                goto response;
+            }
+
+            if (fileName.ToLower() == "exit")
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Returning to menu....");
+                return;
+            }
+
+            // Add file extension to the filename
+            string fileWithExtension = fileName + ".txt";
+
+            // Get the user’s resume folder path
+            string userResumesFolder = Path.Combine(usersFolder, username);
+
+            // Construct the full path of the file to delete
+            string filePath = Path.Combine(userResumesFolder, fileWithExtension);
+
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    // Delete the file
+                    File.Delete(filePath);
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"\nResume {fileWithExtension} deleted successfully.\n");
+                    Console.ResetColor();
+                }
+                catch (Exception ex)
+                {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Error deleting the file: {ex.Message}");
+                    Console.ResetColor();
+                }
+            }
+            else
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"File does not exist. Please try again");
+                Console.ResetColor();
+                goto response;
+            }
+        }
 
         //Retrieve all user resumes for Admin?
         public static List<string> GetUserResumes(string username)
@@ -204,6 +286,9 @@ namespace ResumeBuilderApp
         //Save resume to user's folder
         public static void SaveResume(Resume resume, string username)
         {
+        FileName:
+            bool status = false;
+
             string userFolder = Path.Combine(usersFolder, username);
             if (!Directory.Exists(userFolder))
             {
@@ -212,8 +297,6 @@ namespace ResumeBuilderApp
                 return;
             }
 
-
-        FileName:
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("Please enter filename of your resume (No file extension needed): ");
             string? fileName = Console.ReadLine();
@@ -229,14 +312,57 @@ namespace ResumeBuilderApp
             string pdfPath = Path.Combine(documentsFolder, fileName + ".pdf");
             string txtPath = Path.Combine(userFolder, fileName + ".txt");
 
-            //Saving methods to pdf and to text
-            new PDF().ExportToPdf(resume, pdfPath);
-            new Txt().ExportToTxt(resume, txtPath);
+            if (File.Exists(txtPath) || File.Exists(pdfPath))
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("File Name already taken. Try again.\n"); Console.ResetColor();
+                goto FileName;
+            }
+            try
+            {
+                // Saving methods to pdf and to text and includes different types of resume
+                if (resume is EngineeringResume Engineering)
+                {
+                    Engineering.SaveToPdf(pdfPath);
+                    Engineering.SaveToTxt(txtPath);
+                    status = true;
+                }
+                else if (resume is BPOResume BPO)
+                {
+                    BPO.SaveToPdf(pdfPath);
+                    BPO.SaveToTxt(txtPath);
+                    status = true;
+                }
+                /*else if (resume is MedicalResume Medical)
+                {
+                    Medical.SaveToPdf(pdfPath);
+                    Medical.SaveToTxt(txtPath);
+                    status = true;
+                } */
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"An error occurred while saving the resume: {ex.Message}");
+                Console.ResetColor();
+            }
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Resume saved for user " + username); Console.ResetColor();
-            Thread.Sleep(1600);
-            Console.Clear();
+            if (status)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Resume saved for user " + username); Console.ResetColor();
+                Thread.Sleep(1600);
+                Console.Clear();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("\nResume failed to save for user " + username); Console.ResetColor();
+                Thread.Sleep(1600);
+                Console.Clear();
+            }
+
 
         }
 
@@ -266,6 +392,7 @@ namespace ResumeBuilderApp
             }
             return false;
         }
+
         //Searching method
         public static Resume LoadFromTxtFile(string username)
         {
@@ -291,59 +418,41 @@ namespace ResumeBuilderApp
             //checks if it exists
             if (!File.Exists(filePathTxt))
             {
+                Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"File not found: {fileName}"); Console.ResetColor();
                 return null;
             }
 
-            //Store the information retrieved in a new Resume object
-            Resume resume = new Resume();
-
-            try
+            Resume resume;
+            using (StreamReader reader = new StreamReader(filePathTxt))
             {
-                using (StreamReader reader = new StreamReader(filePathTxt))
+                string? resumeType = reader.ReadLine()?.Split(": ")[1];
+                switch (resumeType)
                 {
-                    // Assuming a consistent format, read each line and insert the data to the resume fields
-                    reader.ReadLine(); // Skip the "Personal Information" header
-                    resume.PersonalInfo.Name = reader.ReadLine()?.Split(": ")[1];
-                    resume.PersonalInfo.Email = reader.ReadLine()?.Split(": ")[1];
-                    resume.PersonalInfo.PhoneNumber = reader.ReadLine()?.Split(": ")[1];
-                    resume.PersonalInfo.Description = reader.ReadLine()?.Split(": ")[1];
-
-                    reader.ReadLine(); //skip blank space
-
-                    reader.ReadLine();//Skip work experience header
-                    resume.WorkExperience.Company = reader.ReadLine()?.Split(": ")[1];
-                    resume.WorkExperience.JobTitle = reader.ReadLine()?.Split(": ")[1];
-                    resume.WorkExperience.Duration = reader.ReadLine()?.Split(": ")[1];
-
-                    reader.ReadLine(); //skip blank space
-
-                    reader.ReadLine(); //Skip education header
-                    resume.Education.Degree = reader.ReadLine()?.Split(": ")[1];
-                    resume.Education.School = reader.ReadLine()?.Split(": ")[1];
-                    resume.Education.YearOfGraduation = reader.ReadLine()?.Split(": ")[1];
-
-                    reader.ReadLine(); //Skip empty line
-
-                    reader.ReadLine(); //skips skills header
-
-                    string? skill;
-                    while ((skill = reader.ReadLine()) != null)
-                    {
-                        resume.Skills.SkillList.Add(skill.TrimStart('-').Trim());
-                    }
+                    case "Engineering":
+                        resume = new EngineeringResume();
+                        resume = EngineeringResume.LoadFromTxt(filePathTxt);
+                        break;
+                    case "BPO":
+                        resume = new BPOResume();
+                        resume = BPOResume.LoadFromTxt(filePathTxt);
+                        break;
+                    case "Medical":
+                        resume = new MedicalResume();
+                        resume = MedicalResume.LoadFromTxt(filePathTxt);
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Unknown resume type.");
+                        Console.ResetColor();
+                        return null;
                 }
-
-                Console.WriteLine("\nResume Loaded Successfully\n");
-                Console.Write("Press any key to continue");
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Error loading resume: " + ex.Message); Console.ResetColor();
             }
 
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\nResume Loaded Successfully\n");
+            Console.Write("Press any key to continue"); Console.ResetColor(); Console.ForegroundColor = ConsoleColor.Cyan;
             return resume;
         }
 
@@ -400,6 +509,8 @@ namespace ResumeBuilderApp
             }
         }
 
+        //User deletes resume
+       
         /// 
         /// Admin Privileges Below as well as User Request if Password has been forgotten
         ///
@@ -610,6 +721,7 @@ namespace ResumeBuilderApp
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("Press any key to continue");
                     Console.ReadKey();
+                    Console.Clear();
                     return true;
                 }
             }
@@ -618,91 +730,11 @@ namespace ResumeBuilderApp
             Console.WriteLine($"\nUser {username} was not found...\n"); Console.ResetColor();
             return false;
         }
-    }
 
-    public class PDF
-    {
-        public void ExportToPdf(Resume resume, string filePath)
-        {
-            try
-            {
-                using (PdfWriter writer = new PdfWriter(filePath))
-                {
-                    using (PdfDocument pdf = new PdfDocument(writer))
-                    {
-                        Document document = new Document(pdf);
-
-                        ///this is from iText library
-                        Style noSpaceStyle = new Style().SetMarginTop(0).SetMarginBottom(0); //noSpace style
-
-
-                        // Placeholder box for image
-                        iText.Kernel.Geom.Rectangle placeholderBox = new iText.Kernel.Geom.Rectangle(37, 700, 100, 100); // x, y, width, height
-                        PdfCanvas canvas = new PdfCanvas(pdf.AddNewPage());
-                        canvas.SetStrokeColor(ColorConstants.BLACK);
-                        canvas.SetLineWidth(1);
-                        canvas.Rectangle(placeholderBox);
-                        canvas.Stroke();
-
-                        document.Add(new Paragraph().SetMarginBottom(100));
-
-                        //PERSONAL INFORMATION
-                        document.Add(new Paragraph($"{resume.PersonalInfo.Name}").SetFontSize(20).SetBold().SetMarginTop(10)
-                            .AddStyle(noSpaceStyle));
-                        document.Add(new Paragraph($"Email: {resume.PersonalInfo.Email}").AddStyle(noSpaceStyle));
-                        document.Add(new Paragraph($"Phone: {resume.PersonalInfo.PhoneNumber}").AddStyle(noSpaceStyle));
-
-                        document.Add(new Paragraph());
-                        document.Add(new Paragraph());
-                        AddLine(document);
-                        document.Add(new Paragraph($"{resume.PersonalInfo.Description}"));
-                        document.Add(new Paragraph());
-                        document.Add(new Paragraph());
-
-                        AddLine(document);
-                        document.Add(new Paragraph());
-
-                        // Work Experience
-                        document.Add(new Paragraph("WORK EXPERIENCE").SetBold());
-                        document.Add(new Paragraph($"Company: {resume.WorkExperience.Company}").AddStyle(noSpaceStyle));
-                        document.Add(new Paragraph($"Job Title: {resume.WorkExperience.JobTitle}").AddStyle(noSpaceStyle));
-                        document.Add(new Paragraph($"Duration: {resume.WorkExperience.Duration}").AddStyle(noSpaceStyle));
-
-                        document.Add(new Paragraph());
-                        AddLine(document);
-                        document.Add(new Paragraph());
-
-                        // Education
-                        document.Add(new Paragraph("EDUCATION").SetBold());
-                        document.Add(new Paragraph($"Degree: {resume.Education.Degree}").AddStyle(noSpaceStyle));
-                        document.Add(new Paragraph($"School: {resume.Education.School}").AddStyle(noSpaceStyle));
-                        document.Add(new Paragraph($"Year of Graduation: {resume.Education.YearOfGraduation}").AddStyle(noSpaceStyle));
-
-                        document.Add(new Paragraph());
-                        AddLine(document);
-                        document.Add(new Paragraph());
-
-                        // Skills
-                        document.Add(new Paragraph("SKILLS").SetBold());
-                        foreach (var skill in resume.Skills.SkillList)
-                        {
-                            document.Add(new Paragraph($"- {skill}"));
-                        }
-
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("PDF resume saved successfully!");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nError caught: " + ex); Console.ResetColor();
-            }
-        }
-
+        
+        //Formatting for other classes to use with pdf saving
         //Method to add the line breaker like a really long line like in MS Word
-        private void AddLine(Document document)
+        public static void AddLine(Document document)
         {
             LineSeparator line = new LineSeparator(new SolidLine(1)); //Thickness is set to 1 
             line.SetWidth(UnitValue.CreatePercentValue(100)); //It needs to be a Percent value so that the line will stretch from margin to margin
@@ -711,46 +743,4 @@ namespace ResumeBuilderApp
         }
     }
 
-    public class Txt
-    {
-        public void ExportToTxt(Resume resume, string filePath)
-        {
-            try
-            {
-                using (StreamWriter writer = new StreamWriter(filePath))
-                {
-                    // writer.WriteLine($"{username}");
-                    writer.WriteLine("Personal Information");
-                    writer.WriteLine($"Name: {resume.PersonalInfo.Name}");
-                    writer.WriteLine($"Email: {resume.PersonalInfo.Email}");
-                    writer.WriteLine($"Phone: {resume.PersonalInfo.PhoneNumber}");
-                    writer.WriteLine($"Description: {resume.PersonalInfo.Description}\n");
-
-                    writer.WriteLine("Work Experience");
-                    writer.WriteLine($"Company: {resume.WorkExperience.Company}");
-                    writer.WriteLine($"Job Title: {resume.WorkExperience.JobTitle}");
-                    writer.WriteLine($"Duration: {resume.WorkExperience.Duration}\n");
-
-                    writer.WriteLine("Education");
-                    writer.WriteLine($"Degree: {resume.Education.Degree}");
-                    writer.WriteLine($"School: {resume.Education.School}");
-                    writer.WriteLine($"Year of Graduation: {resume.Education.YearOfGraduation}\n");
-
-                    writer.WriteLine("Skills");
-                    foreach (var skill in resume.Skills.SkillList)
-                    {
-                        writer.WriteLine($"- {skill}");
-                    }
-
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("\nText file saved successfully!");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Error saving resume: " + ex.Message); Console.ResetColor();
-            }
-        }
-    }
 }

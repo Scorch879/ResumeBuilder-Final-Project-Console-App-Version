@@ -5,7 +5,9 @@
             public abstract void CollectData();
             public abstract override string ToString();
 
-            public virtual string GetInput(string fieldName)
+        public string Title { get; protected set; }
+
+        public virtual string GetInput(string fieldName)
             {
                 string? input;
                 do

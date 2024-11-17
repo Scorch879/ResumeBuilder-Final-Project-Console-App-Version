@@ -15,6 +15,12 @@ namespace ResumeBuilderApp
 
         public override void CollectData()
         {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("==============================");
+            Console.WriteLine("           SKILLS");
+            Console.WriteLine("==============================\n");
+
             _skillList.Clear();
 
             Console.WriteLine("Enter skills (type 'done' to finish):");

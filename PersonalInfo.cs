@@ -38,6 +38,12 @@ namespace ResumeBuilderApp
 
         public override void CollectData()
         {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("==============================");
+            Console.WriteLine("     PERSONAL INFORMATION");
+            Console.WriteLine("==============================\n");
+
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("Enter Full Name: ");
             Name = GetInput("Name");
