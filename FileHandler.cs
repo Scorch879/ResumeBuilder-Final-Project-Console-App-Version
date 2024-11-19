@@ -54,16 +54,16 @@ namespace ResumeBuilderApp
                 return false;
             }
 
-            using (StreamWriter sw = new StreamWriter(userData, true))
-            {
-                sw.WriteLine($"{username}:{password}:{role}:");
-            }
-
             //Create user folder
             string userFolder = Path.Combine(usersFolder, username);
             if (!Directory.Exists(userFolder))
             {
                 Directory.CreateDirectory(userFolder);
+            }
+
+            using (StreamWriter sw = new StreamWriter(userData, true))
+            {
+                sw.WriteLine($"{username}:{password}:{role}:");
             }
 
             Console.ForegroundColor = ConsoleColor.Green;
@@ -260,7 +260,7 @@ namespace ResumeBuilderApp
             }
         }
 
-        //Retrieve all user resumes for Admin?
+        //Retrieve all user resumes 
         public static List<string> GetUserResumes(string username)
         {
             List<string> resumeFiles = new List<string>();
@@ -334,12 +334,12 @@ namespace ResumeBuilderApp
                     BPO.SaveToTxt(txtPath);
                     status = true;
                 }
-                /*else if (resume is MedicalResume Medical)
+                else if (resume is MedicalResume Medical)
                 {
                     Medical.SaveToPdf(pdfPath);
                     Medical.SaveToTxt(txtPath);
                     status = true;
-                } */
+                }
             }
             catch (Exception ex)
             {
@@ -362,7 +362,7 @@ namespace ResumeBuilderApp
                 Thread.Sleep(1600);
                 Console.Clear();
             }
-
+             
 
         }
 
@@ -454,6 +454,38 @@ namespace ResumeBuilderApp
             Console.WriteLine("\nResume Loaded Successfully\n");
             Console.Write("Press any key to continue"); Console.ResetColor(); Console.ForegroundColor = ConsoleColor.Cyan;
             return resume;
+        }
+
+        public static string typeResume(string username)
+        {
+            GetUserResumes(username);
+        start:
+            //User enters the file name
+            Console.Write("\nEnter the file name to load (without file extension): ");
+            string? fileName = Console.ReadLine()?.Trim();
+
+            if (fileName == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("No file name entered. Try Again Please"); Console.ResetColor();
+                goto start;
+            }
+
+            string? resumeType;
+            // Get the Documents path and prompt the user for the file name
+            string folderPath = Path.Combine(usersFolder, username); //gets the path of the folder 
+
+            string filePathTxt = Path.Combine(folderPath, fileName + ".txt"); //txt file going to the folder "Resume Text Files Data" in MyDocume
+
+            using (StreamReader reader = new StreamReader(filePathTxt))
+            {
+                resumeType = reader.ReadLine()?.Split(": ")[1];
+            }
+
+            if (resumeType != null)
+                return resumeType;
+            else
+                throw new Exception("Unvalidated Resume");
         }
 
         //User requests password change

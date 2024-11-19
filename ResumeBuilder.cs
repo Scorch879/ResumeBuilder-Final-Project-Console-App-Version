@@ -65,7 +65,7 @@ namespace ResumeBuilderApp
         {
         begin:
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\t\t\tMain Menu");
+            Console.WriteLine("\t\t\t     Main Menu");
             Console.WriteLine("=============================================================================="); Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("1. Build Resume");
@@ -236,8 +236,6 @@ namespace ResumeBuilderApp
 
         }
 
-       
-
         protected void _BuildNewResume() //For generating a new resume from scratch
         {
             Console.Clear();
@@ -317,12 +315,12 @@ namespace ResumeBuilderApp
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             _resume = FileHandler.LoadFromTxtFile(currentUser);
-
             if (_resume == null) //checks if the FileHandler returns null or not
             {Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nCould not load resume.Returning to main menu....\n"); Console.ResetColor();
                 return;
             }
+
 
             Console.ReadKey();
             Console.WriteLine();
@@ -392,44 +390,162 @@ namespace ResumeBuilderApp
             Console.Clear();
 
         editChoices:
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("\nWhich section would you like to edit?");
-            Console.WriteLine("1. Personal Information");
-            Console.WriteLine("2. Work Experience");
-            Console.WriteLine("3. Education");
-            Console.WriteLine("4. Skills");
-            Console.Write("Choice: ");
-            string? editChoice = Console.ReadLine();
-            Console.ResetColor();
-
             Console.Clear();
-            switch (editChoice)
+            resumeType = FileHandler.typeResume(currentUser);
+            if (resumeType == "Engineering")
             {
-                case "1":
-                    Console.WriteLine("\nEditing Personal Information\n");
-                    _resume.PersonalInfo.CollectData();
-                    break;
-                case "2":
-                    Console.WriteLine("\nEditing Work Experience\n");
-                    _resume.WorkExperience.CollectData();
-                    break;
-                case "3":
-                    Console.WriteLine("\nEditing Education\n");
-                    _resume.Education.CollectData();
-                    break;
-                case "4":
-                    Console.WriteLine("\nEditing Skills\n");
-                    _resume.Skills.CollectData();
-                    break;
-                default:
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid option. Please choose again."); Console.ResetColor();
-                    goto editChoices;
+                Console.Clear();
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("==============================");
+                Console.WriteLine("    ENGINEERING INFORMATION");
+                Console.WriteLine("==============================\n");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Select the section you want to edit:");
+                Console.ResetColor();
+                Console.WriteLine("1. Personal Information");
+                Console.WriteLine("2. Work Experience");
+                Console.WriteLine("3. Education");
+                Console.WriteLine("4. Skills");
+                Console.WriteLine("5. Custom Sections");
+
+                int choice = int.Parse(Console.ReadLine());
+
+                EngineeringResume engineeringResume = new EngineeringResume();
+                switch (choice)
+                {
+                    case 1:
+                        engineeringResume.PersonalInfo.CollectData();
+                        break;
+                    case 2:
+                        engineeringResume.WorkExperience.CollectData();
+                        break;
+                    case 3:
+                        engineeringResume.Education.CollectData();
+                        break;
+                    case 4:
+                        engineeringResume.Skills.CollectData();
+                        break;
+                    case 5:
+                        engineeringResume.AddCustomSection(new Projects());
+                        engineeringResume.AddCustomSection(new Certifications());
+                        engineeringResume.AddCustomSection(new Courses());
+                        engineeringResume.AddCustomSection(new CharacterReferences());
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        Console.ResetColor();
+                        goto editChoices;
+                }
+            }
+            else if (resumeType == "BPO")
+            {
+                Console.Clear();
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("==============================");
+                Console.WriteLine("    BPO INFORMATION");
+                Console.WriteLine("==============================\n");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Select the section you want to edit:");
+                Console.ResetColor();
+                Console.WriteLine("1. Personal Information");
+                Console.WriteLine("2. Work Experience");
+                Console.WriteLine("3. Education");
+                Console.WriteLine("4. Skills");
+                Console.WriteLine("5. Custom Sections");
+
+                int choice = int.Parse(Console.ReadLine());
+
+                var bpoResume = new BPOResume();
+                switch (choice)
+                {
+                    case 1:
+                        bpoResume.PersonalInfo.CollectData();
+                        break;
+                    case 2:
+                        bpoResume.WorkExperience.CollectData();
+                        break;
+                    case 3:
+                        bpoResume.Education.CollectData();
+                        break;
+                    case 4:
+                        bpoResume.Skills.CollectData();
+                        break;
+                    case 5:
+                        bpoResume.AddCustomSection(new BPOVolunteerExperiences());
+                        bpoResume.AddCustomSection(new Languages());
+                        bpoResume.AddCustomSection(new Interests());
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        Console.ResetColor();
+                        break;
+                }
+            }
+            else if (resumeType == "Medical")
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("==============================");
+                Console.WriteLine("    MEDICAL INFORMATION");
+                Console.WriteLine("==============================\n");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Select the section you want to edit:");
+                Console.ResetColor();
+                Console.WriteLine("1. Personal Information");
+                Console.WriteLine("2. Work Experience");
+                Console.WriteLine("3. Education");
+                Console.WriteLine("4. Skills");
+                Console.WriteLine("5. Custom Sections");
+
+                int choice = int.Parse(Console.ReadLine());
+
+                var medsume = new MedicalResume();
+                switch (choice)
+                {
+                    case 1:
+                        medsume.PersonalInfo.CollectData();
+                        break;
+                    case 2:
+                        medsume.WorkExperience.CollectData();
+                        break;
+                    case 3:
+                        medsume.Education.CollectData();
+                        break;
+                    case 4:
+                        medsume.Skills.CollectData();
+                        break;
+                    case 5:
+                        medsume.AddCustomSection(new License());
+                        medsume.AddCustomSection(new MedicalExperience());
+                        medsume.AddCustomSection(new Certificates());
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        Console.ResetColor();
+                        break;
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Unknown resume type. Please verify the user's resume type.");
+                Console.ResetColor();
+                goto editChoices;
             }
         }
 
-      protected void _DisplayResume()
+        protected void _DisplayResume()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine();

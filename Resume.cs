@@ -10,7 +10,7 @@ namespace ResumeBuilderApp
         public Skills Skills { get; set; }
         public EngineeringResume? EngineeringResume { get; set; }
         public BPOResume? BpoResume { get; set; }
-
+        public MedicalResume? MedicalResume { get; set; }
         public Resume()
         {
             // Initialize sections

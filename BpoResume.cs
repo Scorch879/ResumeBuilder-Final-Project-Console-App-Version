@@ -113,7 +113,7 @@ namespace ResumeBuilderApp
             {
                 using (StreamWriter writer = new StreamWriter(txtPath))
                 {
-                    writer.WriteLine("ResumeType: Engineering");
+                    writer.WriteLine("ResumeType: BPO");
 
                     // Personal Information
                     writer.WriteLine($"Name: {PersonalInfo.Name}");
