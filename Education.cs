@@ -7,18 +7,41 @@ namespace ResumeBuilderApp
 	{
         private string? _degree, _school, _yearOfGraduation;
 
-        public string? Degree { get => this._degree; set => this._degree = value; }
-        public string? School { get => this._school; set => this._school = value; }
-        public string? YearOfGraduation { get => this._yearOfGraduation ; set => this._yearOfGraduation = value; }
+        public string? Degree 
+        { 
+            get => this._degree; 
+            set => this._degree = value; 
+        }
+
+        public string? School 
+        { 
+            get => this._school; 
+            set => this._school = value; 
+        }
+
+        public string? YearOfGraduation 
+        { 
+            get => this._yearOfGraduation ; 
+            set => this._yearOfGraduation = value; 
+        }
 
         public override void CollectData()
         {
-            Console.WriteLine("Enter Degree:");
-            Degree = Console.ReadLine();
-            Console.WriteLine("Enter School:");
-            School = Console.ReadLine();
-            Console.WriteLine("Enter Year of Graduation:");
-            YearOfGraduation = Console.ReadLine();
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("==============================");
+            Console.WriteLine("          EDUCATION");
+            Console.WriteLine("==============================\n");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("Enter Degree:");
+            Degree = GetInput("Degree");
+
+            Console.Write("Enter School:");
+            School = GetInput("School");
+
+            Console.Write("Enter Year of Graduation:");
+            YearOfGraduation = GetInput("YearOfGraduation");
         }
 
         public override string ToString() =>

@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ResumeBuilderApp.Program" Collapsed="true">
+    <Position X="23.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Resume">
+    <Position X="8.75" Y="7.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAIAAAgAAAAIAAAAAAAEAAAAAAEAAgAAAAAAE=</HashCode>
+      <FileName>Resume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Section">
+    <Position X="22" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAEAEAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Section.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.PersonalInfo">
+    <Position X="6.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABIAAAACAgAAAEAAAAQAQAAAAAAAACEAAAAEAAAAE=</HashCode>
+      <FileName>PersonalInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.WorkExperience">
+    <Position X="15.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAACAAAEABAAAAAAAAAAAAAAEAAAhAAIAAA=</HashCode>
+      <FileName>WorkExperience.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Education">
+    <Position X="15.75" Y="9.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAEAAIAAAAQAAAgAAAAUAAAEAAAAAA=</HashCode>
+      <FileName>Education.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Skills">
+    <Position X="9" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAQAAAAAAAEAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Skills.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.ResumeBuilder">
+    <Position X="13.25" Y="6.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQCAAAADAADQEAAAYAAABAEIAAAAQAAACgAE=</HashCode>
+      <FileName>ResumeBuilder.cs</FileName>
+      <NewMemberFileName>Resume.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.FileHandler" Collapsed="true">
+    <Position X="25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAgQAAAAQAAIAQAEAQASCAEAAAIAAAACAIEQAgACAQA=</HashCode>
+      <FileName>FileHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Project" Collapsed="true">
+    <Position X="25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAECAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>EngineeringResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Projects">
+    <Position X="11.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAEAAEAAAAAAAAAA=</HashCode>
+      <FileName>EngineeringResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Certifications">
+    <Position X="18" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAIAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>EngineeringResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.BPOResume">
+    <Position X="6.75" Y="11" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEIIAAAAAAAAAAAAAgAAAIAgAgAAA=</HashCode>
+      <FileName>BpoResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.EngineeringResume">
+    <Position X="9" Y="11" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAEIIAAAAAAAAAAAAIgAAAIAhAEAQA=</HashCode>
+      <FileName>EngineeringResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Course" Collapsed="true">
+    <Position X="23.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAGAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EngineeringResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Courses">
+    <Position X="20" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAEAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>EngineeringResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.License">
+    <Position X="13.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAEAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>MedicalResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.CharacterReference" Collapsed="true">
+    <Position X="26.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAIAAAAAAAAAAAABAAAAAAI=</HashCode>
+      <FileName>EngineeringResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.CharacterReferences">
+    <Position X="22.25" Y="9.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAQAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>EngineeringResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Certification" Collapsed="true">
+    <Position X="25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAACBAEAAgAAAAAAAAAEAAAABAAAAAAAAA=</HashCode>
+      <FileName>EngineeringResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.CategorySelector" Collapsed="true">
+    <Position X="23.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CategorySelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.AdminMenu">
+    <Position X="13.25" Y="11.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AdminMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.BPOVolunteerExperiences">
+    <Position X="19.75" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAEAAAAAgAAAA=</HashCode>
+      <FileName>BpoResume.cs</FileName>
+      <NewMemberFileName>EngineeringResume.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Languages">
+    <Position X="15.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAIAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>BpoResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Interests">
+    <Position X="17.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAACAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>BpoResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.MedicalResume">
+    <Position X="11.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAEIIAAAAAAAAAAAAAgAAAIAgAACAA=</HashCode>
+      <FileName>MedicalResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.MedicalExperience">
+    <Position X="19.25" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAEAAAAAAACAA=</HashCode>
+      <FileName>MedicalResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.MedicalEntry" Collapsed="true">
+    <Position X="26.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MedicalResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResumeBuilderApp.Certificates">
+    <Position X="17.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>MedicalResume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ResumeBuilderApp.ResumeCategory">
+    <Position X="23.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAQAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>CategorySelector.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
