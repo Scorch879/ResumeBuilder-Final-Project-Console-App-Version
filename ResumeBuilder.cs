@@ -1,6 +1,4 @@
 ﻿using iText.Bouncycastle.Crypto;
-using System;
-
 namespace ResumeBuilderApp
 {
     public class ResumeBuilder

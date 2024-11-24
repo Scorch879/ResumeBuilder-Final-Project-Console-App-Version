@@ -1,10 +1,8 @@
 ﻿using iText.Layout;
-using iText.Kernel.Pdf;
 using iText.Layout.Element;
 using iText.Kernel.Colors;
 using iText.Layout.Properties;
 using iText.Kernel.Pdf.Canvas.Draw;
-using iText.Kernel.Pdf.Canvas;
 
 namespace ResumeBuilderApp
 {
@@ -763,7 +761,6 @@ namespace ResumeBuilderApp
             return false;
         }
 
-        
         //Formatting for other classes to use with pdf saving
         //Method to add the line breaker like a really long line like in MS Word
         public static void AddLine(Document document)

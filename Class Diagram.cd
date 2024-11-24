@@ -93,7 +93,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="ResumeBuilderApp.EngineeringResume">
-    <Position X="8.75" Y="11" Width="2" />
+    <Position X="9" Y="11" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAEIIAAAAAAAAAAAAIgAAAIAhAEAQA=</HashCode>
       <FileName>EngineeringResume.cs</FileName>
@@ -205,7 +205,7 @@
       <FileName>MedicalResume.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="ResumeBuilderApp.ResumeCategory" Collapsed="true">
+  <Enum Name="ResumeBuilderApp.ResumeCategory">
     <Position X="23.25" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAQAAAAAAAAAAABAAAAA=</HashCode>
